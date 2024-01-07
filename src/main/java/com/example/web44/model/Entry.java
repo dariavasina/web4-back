@@ -11,6 +11,10 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name="x")
     private double x;
 
@@ -35,6 +39,7 @@ public class Entry {
         this.r = r;
         this.hit = hit;
         this.responseTime = responseTime;
+
     }
 
     public long getId() {
@@ -43,6 +48,14 @@ public class Entry {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public double getX() {

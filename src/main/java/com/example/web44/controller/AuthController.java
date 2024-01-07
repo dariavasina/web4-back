@@ -4,12 +4,14 @@ package com.example.web44.controller;
 import com.example.web44.model.User;
 import com.example.web44.repository.UserRepository;
 import com.example.web44.service.UserService;
+import com.example.web44.utils.JwtTokenUtil;
 import com.example.web44.validators.AuthError;
 import com.example.web44.validators.UserValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @CrossOrigin(origins = {"https://localhost:3000"})
 @RestController
@@ -37,7 +39,9 @@ public class AuthController {
         if (userValidation != null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(userValidation.getErrorMessage());
         }
-        return ResponseEntity.ok().body("Success");
+
+        //String token = JwtTokenUtil.generateToken(user.getUsername());
+        return ResponseEntity.ok().body("ok");
     }
 
 //    @PostMapping("/users")
