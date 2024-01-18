@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @CrossOrigin(origins = {"https://localhost:3000"})
 @RestController
@@ -27,10 +29,9 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/auth/signup")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        AuthError authError = new UserValidation().validateUser(user.getUsername(),
-                user.getPassword());
+        AuthError authError = new UserValidation().validateUser(user.getUsername(), user.getPassword());
         if(authError != null){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(authError.getErrorMessage());
         }
@@ -40,13 +41,28 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(userValidation.getErrorMessage());
         }
 
-        //String token = JwtTokenUtil.generateToken(user.getUsername());
         return ResponseEntity.ok().body("ok");
     }
 
-//    @PostMapping("/users")
-//    public User createUser(@RequestBody User user) {
-//        System.out.println("pupupu");
-//       return userRepository.save(user);
-//    }
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+        AuthError authError = new UserValidation().validateUser(user.getUsername(), user.getPassword());
+        if(authError != null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authError.getErrorMessage());
+        }
+
+        Optional<User> optionalExistingUser = userRepository.findByUsername(user.getUsername());
+        if (optionalExistingUser.isPresent()) {
+            User existingUser = optionalExistingUser.get();
+            String password = userService.encodePassword(user.getPassword());
+            if (!existingUser.getPassword().equals(password)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            }
+        }
+
+        String token = JwtTokenUtil.generateToken(user.getUsername());
+        return ResponseEntity.ok().body(token);
+    }
+
+
 }

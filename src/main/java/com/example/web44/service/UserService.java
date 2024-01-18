@@ -50,12 +50,4 @@ public class UserService {
         return null;
     }
 
-//    public AuthorizedUserCredentials loginUser(UserCredentials userCredentials) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(userCredentials.getName(), userCredentials.getPassword())
-//        );
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        String jwtToken = jwtUtils.generateJwtToken(userCredentials.getName());
-//        return new AuthorizedUserCredentials(userCredentials.getName(), jwtToken);
-//    }
 }

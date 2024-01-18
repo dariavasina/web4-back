@@ -33,12 +33,13 @@ public class Entry {
     public Entry() {
 
     }
-    public Entry(double x, double y, double r, boolean hit, double responseTime) {
+    public Entry(double x, double y, double r, boolean hit, double responseTime, User user) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.hit = hit;
         this.responseTime = responseTime;
+        this.user = user;
 
     }
 

@@ -1,11 +1,11 @@
 package com.example.web44.validators;
 
 public enum AuthError {
-    INCORRECT_USERNAME_OR_PASSWORD("Некорректное имя или пароль"),
-    INVALID_PASSWORD("Пароль должен быть не менее 1 символа и включает только буквы и цифры"),
-    INVALID_LOGIN("Логин должен быть не менее 1 символа и включает только буквы и цифры"),
-    USER_ALREADY_EXISTS("Пользователь уже существует, придумайте другое имя или измените почту"),
-    SESSION_EXPIRED("Действие токена истекло");
+    INCORRECT_USERNAME_OR_PASSWORD("Wrong username or password"),
+    INVALID_PASSWORD("Password must be longer than 1 symbol and contain only letters and numbers"),
+    INVALID_LOGIN("Username must be longer than 1 symbol and contain only letters and numbers"),
+    USER_ALREADY_EXISTS("User with such login already exists"),
+    SESSION_EXPIRED("Token has expired");
 
     private final String errorMessage;
 
